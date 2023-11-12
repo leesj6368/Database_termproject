@@ -33,19 +33,19 @@ public class car{
                         break;
                     case 3:
                         // 중고차 정보 확인
-                        viewUsedCarInfo();
+                        viewCarInfo();
                         break;
                     case 4:
                         // 중고차 정보 등록
-                        addUsedCarInfo();
+                        addCarInfo();
                         break;
                     case 5:
                         // 중고차 정보 수정
-                        updateUsedCarInfo();
+                        updateCarInfo();
                         break;
                     case 6:
                         // 중고차 정보 삭제
-                        deleteUsedCarInfo();
+                        deleteCarInfo();
                         break;
                     case 7:
                         // 거래 내역 확인
@@ -56,6 +56,30 @@ public class car{
                         addTransactionHistory();
                         break;
                     case 9:
+                        // 가장 비싼 중고차 확인
+                    	viewExpensiveCar();
+                        break;
+                    case 10:
+                    	//가장 저렴한 중고차 확인
+                    	viewCheapeCar();
+                        break;
+                    case 11:
+                    	//연식이 가장 오래된 중고차 확인
+                    	viewOldCar();
+                        break;
+                    case 12:
+                    	//연식이 가장 최근인 중고차 확인
+                    	viewNewCar();
+                        break;
+                    case 13:
+                    	//판매량 가장 많은 제조사 확인
+                    	viewTopManufacturerBySales();
+                        break;
+                    case 14:
+                    	//판매량 가장 많은 판매자 확인
+                    	viewTopSalespersonBySales();
+                        break;
+                    case 100:
                         // 종료
                         System.out.println("프로그램을 종료합니다.");
                         return;
@@ -101,7 +125,14 @@ public class car{
         System.out.println("6. 중고차 정보 삭제");
         System.out.println("7. 거래 내역 확인");
         System.out.println("8. 거래 내역 등록");
-        System.out.println("9. 종료");
+        System.out.println("9. 가격 가장 높은 중고차 검색");
+        System.out.println("10. 가격 가장 낮은 중고차 검색");
+        System.out.println("11. 연식 가장 오래된 중고차 검색");
+        System.out.println("12. 연식 가장 최근인 중고차 검색");
+        System.out.println("13. 판매량 가장 많은 제조사 확인");
+        System.out.println("14. 판매량 가장 적은 제조사 확인");
+        System.out.println("15. 판매량 가장 많은 판매직원 확인");
+        System.out.println("100. 종료");
         System.out.print("메뉴를 선택하세요: ");
     }
 
@@ -130,7 +161,7 @@ public class car{
         }
     }
 
-    private static void viewUsedCarInfo() throws SQLException {
+    private static void viewCarInfo() throws SQLException {
         // 중고차 정보 조회
         String query = "SELECT * FROM 중고차";
         try (Statement statement = connection.createStatement();
@@ -146,7 +177,7 @@ public class car{
     }
 
 
-    private static void addUsedCarInfo() throws SQLException {
+    private static void addCarInfo() throws SQLException {
         // 중고차 정보 등록
         System.out.print("모델 ID 입력: ");
         int modelId = scanner.nextInt();
@@ -169,7 +200,7 @@ public class car{
         }
     }
 
-    private static void updateUsedCarInfo() throws SQLException {
+    private static void updateCarInfo() throws SQLException {
         // 중고차 정보 수정
         System.out.print("수정할 차량 ID 입력: ");
         int carId = scanner.nextInt();
@@ -188,7 +219,7 @@ public class car{
             }
         }
     }
-    private static void deleteUsedCarInfo() throws SQLException {
+    private static void deleteCarInfo() throws SQLException {
         // 중고차 정보 삭제
         System.out.print("삭제할 차량 ID 입력: ");
         int carId = scanner.nextInt();
@@ -247,4 +278,128 @@ public class car{
             System.out.println("거래 내역이 성공적으로 등록되었습니다.");
         }
     }
+
+    private static void viewExpensiveCar() throws SQLException {
+        // 가장 비싼 중고차 확인
+        String query = "SELECT * FROM 중고차 ORDER BY 가격 DESC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("가장 비싼 중고차 정보:");
+                System.out.println("차량 ID: " + resultSet.getInt("자동차ID") +
+                        ", 모델 ID: " + resultSet.getInt("모델ID") +
+                        ", 연식: " + resultSet.getInt("연식") +
+                        ", 가격: " + resultSet.getDouble("가격") +
+                        ", 상태: " + resultSet.getString("상태"));
+            } else {
+                System.out.println("중고차 정보가 존재하지 않습니다.");
+            }
+        }
+    }
+
+    private static void viewCheapeCar() throws SQLException {
+        // 가장 저렴한 중고차 확인
+        String query = "SELECT * FROM 중고차 ORDER BY 가격 ASC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("가장 저렴한 중고차 정보:");
+                System.out.println("차량 ID: " + resultSet.getInt("자동차ID") +
+                        ", 모델 ID: " + resultSet.getInt("모델ID") +
+                        ", 연식: " + resultSet.getInt("연식") +
+                        ", 가격: " + resultSet.getDouble("가격") +
+                        ", 상태: " + resultSet.getString("상태"));
+            } else {
+                System.out.println("중고차 정보가 존재하지 않습니다.");
+            }
+        }
+    }
+
+    private static void viewOldCar() throws SQLException {
+        // 연식이 가장 오래된 중고차 확인
+        String query = "SELECT * FROM 중고차 ORDER BY 연식 ASC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("연식이 가장 오래된 중고차 정보:");
+                System.out.println("차량 ID: " + resultSet.getInt("자동차ID") +
+                        ", 모델 ID: " + resultSet.getInt("모델ID") +
+                        ", 연식: " + resultSet.getInt("연식") +
+                        ", 가격: " + resultSet.getDouble("가격") +
+                        ", 상태: " + resultSet.getString("상태"));
+            } else {
+                System.out.println("중고차 정보가 존재하지 않습니다.");
+            }
+        }
+    }
+
+    private static void viewNewCar() throws SQLException {
+        // 연식이 가장 최근인 중고차 확인
+        String query = "SELECT * FROM 중고차 ORDER BY 연식 DESC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("연식이 가장 최근인 중고차 정보:");
+                System.out.println("차량 ID: " + resultSet.getInt("자동차ID") +
+                        ", 모델 ID: " + resultSet.getInt("모델ID") +
+                        ", 연식: " + resultSet.getInt("연식") +
+                        ", 가격: " + resultSet.getDouble("가격") +
+                        ", 상태: " + resultSet.getString("상태"));
+            } else {
+                System.out.println("중고차 정보가 존재하지 않습니다.");
+            }
+        }
+    }
+
+    private static void viewTopManufacturerBySales() throws SQLException {
+        // 판매량 가장 많은 제조사 확인
+        String query = "SELECT 제조사ID, 제조사이름, COUNT(자동차ID) AS 판매량 " +
+                       "FROM 중고차 JOIN 자동차모델 USING (모델ID) JOIN 제조사 USING (제조사ID) " +
+                       "GROUP BY 제조사ID ORDER BY 판매량 DESC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("판매량이 가장 많은 제조사 정보:");
+                System.out.println("제조사 ID: " + resultSet.getInt("제조사ID") +
+                        ", 제조사 이름: " + resultSet.getString("제조사이름") +
+                        ", 판매량: " + resultSet.getInt("판매량"));
+            } else {
+                System.out.println("제조사 정보가 존재하지 않습니다.");
+            }
+        }
+    }
+
+    private static void viewTopSalespersonBySales() throws SQLException {
+        // 판매량이 가장 많은 판매자 확인
+        String query = "SELECT 판매인ID, 판매인이름, COUNT(거래ID) AS 판매량 " +
+                       "FROM 거래 JOIN 판매인 USING (판매인ID) " +
+                       "GROUP BY 판매인ID ORDER BY 판매량 DESC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("판매량이 가장 많은 판매자 정보:");
+                System.out.println("판매인 ID: " + resultSet.getInt("판매인ID") +
+                        ", 판매인 이름: " + resultSet.getString("이름") +
+                        ", 판매량: " + resultSet.getInt("판매량"));
+            } else {
+                System.out.println("판매자 정보가 존재하지 않습니다.");
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
