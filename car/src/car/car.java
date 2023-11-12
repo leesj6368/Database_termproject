@@ -10,8 +10,6 @@ public class car{
 
     public static void main(String[] args) {
         try {
-            // JDBC 연결
-            connectToDatabase();
 
             while (true) {
                 // 메뉴 표시
@@ -23,63 +21,68 @@ public class car{
 
                 // 선택된 메뉴 실행
                 switch (choice) {
-                    case 1:
+                		
+                	case 1:
+                		// JDBC 연결
+                		connectToDatabase();
+                		break;
+                    case 2:
                         // 제조사 정보 확인
                         viewManufacturerInfo();
                         break;
-                    case 2:
+                    case 3:
                         // 자동차 모델 정보 확인
                         viewCarModelInfo();
                         break;
-                    case 3:
+                    case 4:
                         // 중고차 정보 확인
                         viewCarInfo();
                         break;
-                    case 4:
+                    case 5:
                         // 중고차 정보 등록
                         addCarInfo();
                         break;
-                    case 5:
+                    case 6:
                         // 중고차 정보 수정
                         updateCarInfo();
                         break;
-                    case 6:
+                    case 7:
                         // 중고차 정보 삭제
                         deleteCarInfo();
                         break;
-                    case 7:
+                    case 8:
                         // 거래 내역 확인
                         viewTransactionHistory();
                         break;
-                    case 8:
+                    case 9:
                         // 거래 내역 등록
                         addTransactionHistory();
                         break;
-                    case 9:
+                    case 10:
                         // 가장 비싼 중고차 확인
                     	viewExpensiveCar();
                         break;
-                    case 10:
-                    	//가장 저렴한 중고차 확인
-                    	viewCheapeCar();
-                        break;
                     case 11:
+                    	//가장 저렴한 중고차 확인
+                    	viewCheapCar();
+                        break;
+                    case 12:
                     	//연식이 가장 오래된 중고차 확인
                     	viewOldCar();
                         break;
-                    case 12:
+                    case 13:
                     	//연식이 가장 최근인 중고차 확인
                     	viewNewCar();
                         break;
-                    case 13:
+                    case 14:
                     	//판매량 가장 많은 제조사 확인
                     	viewTopManufacturerBySales();
                         break;
-                    case 14:
+                    case 15:
                     	//판매량 가장 적은 제조사 확인
                     	viewMinManufacturerBySales();
                         break;
-                    case 15:
+                    case 16:
                     	//판매량 가장 많은 판매자 확인
                     	viewTopSalespersonBySales();
                         break;
@@ -106,6 +109,7 @@ public class car{
         String username = "leesj";
         String password = "1234";
         connection = DriverManager.getConnection(url, username, password);
+        System.out.println("데이터베이스에 연결되었습니다.");
     }
 
     private static void closeConnection() {
@@ -121,21 +125,22 @@ public class car{
 
     private static void displayMenu() {
         System.out.println("===== 중고차 관리 시스템 메뉴 =====");
-        System.out.println("1. 제조사 정보 확인");
-        System.out.println("2. 자동차 모델 정보 확인");
-        System.out.println("3. 중고차 정보 확인");
-        System.out.println("4. 중고차 정보 등록");
-        System.out.println("5. 중고차 정보 수정");
-        System.out.println("6. 중고차 정보 삭제");
-        System.out.println("7. 거래 내역 확인");
-        System.out.println("8. 거래 내역 등록");
-        System.out.println("9. 가격 가장 높은 중고차 검색");
-        System.out.println("10. 가격 가장 낮은 중고차 검색");
-        System.out.println("11. 연식 가장 오래된 중고차 검색");
-        System.out.println("12. 연식 가장 최근인 중고차 검색");
-        System.out.println("13. 판매량 가장 많은 제조사 확인");
-        System.out.println("14. 판매량 가장 적은 제조사 확인");
-        System.out.println("15. 판매량 가장 많은 판매직원 확인");
+        System.out.println("1. 데이터베이스 연결");
+        System.out.println("2. 제조사 정보 확인");
+        System.out.println("3. 자동차 모델 정보 확인");
+        System.out.println("4. 중고차 정보 확인");
+        System.out.println("5. 중고차 정보 등록");
+        System.out.println("6. 중고차 정보 수정");
+        System.out.println("7. 중고차 정보 삭제");
+        System.out.println("8. 거래 내역 확인");
+        System.out.println("9. 거래 내역 등록");
+        System.out.println("10. 가격 가장 높은 중고차 검색");
+        System.out.println("11. 가격 가장 낮은 중고차 검색");
+        System.out.println("12. 연식 가장 오래된 중고차 검색");
+        System.out.println("13. 연식 가장 최근인 중고차 검색");
+        System.out.println("14. 판매량 가장 많은 제조사 확인");
+        System.out.println("15. 판매량 가장 적은 제조사 확인");
+        System.out.println("16. 판매량 가장 많은 판매직원 확인");
         System.out.println("100. 종료");
         System.out.print("메뉴를 선택하세요: ");
     }
@@ -300,7 +305,7 @@ public class car{
         }
     }
 
-    private static void viewCheapeCar() throws SQLException {
+    private static void viewCheapCar() throws SQLException {
         // 가장 저렴한 중고차 확인
         String query = "SELECT * FROM 중고차 ORDER BY 가격 ASC LIMIT 1";
         try (Statement statement = connection.createStatement();
