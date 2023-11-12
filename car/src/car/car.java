@@ -76,6 +76,10 @@ public class car{
                     	viewTopManufacturerBySales();
                         break;
                     case 14:
+                    	//판매량 가장 적은 제조사 확인
+                    	viewMinManufacturerBySales();
+                        break;
+                    case 15:
                     	//판매량 가장 많은 판매자 확인
                     	viewTopSalespersonBySales();
                         break;
@@ -199,7 +203,7 @@ public class car{
             System.out.println("중고차 정보가 성공적으로 등록되었습니다.");
         }
     }
-
+    
     private static void updateCarInfo() throws SQLException {
         // 중고차 정보 수정
         System.out.print("수정할 차량 ID 입력: ");
@@ -278,7 +282,6 @@ public class car{
             System.out.println("거래 내역이 성공적으로 등록되었습니다.");
         }
     }
-
     private static void viewExpensiveCar() throws SQLException {
         // 가장 비싼 중고차 확인
         String query = "SELECT * FROM 중고차 ORDER BY 가격 DESC LIMIT 1";
@@ -369,6 +372,23 @@ public class car{
         }
     }
 
+    private static void viewMinManufacturerBySales() throws SQLException {
+        // 판매량이 가장 적은 제조사 확인
+        String query = "SELECT 제조사ID, 제조사이름, COUNT(자동차ID) AS 판매량 " +
+                "FROM 중고차 JOIN 자동차모델 USING (모델ID) JOIN 제조사 USING (제조사ID) " +
+                "GROUP BY 제조사ID ORDER BY 판매량 ASC LIMIT 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                System.out.println("판매량이 가장 적은 제조사 정보:");
+                System.out.println("제조사 ID: " + resultSet.getInt("제조사ID") +
+                        ", 제조사 이름: " + resultSet.getString("제조사이름") +
+                        ", 판매량: " + resultSet.getInt("판매량"));
+            } else {
+                System.out.println("제조사 정보가 존재하지 않습니다.");
+            }
+        }
+    }
     private static void viewTopSalespersonBySales() throws SQLException {
         // 판매량이 가장 많은 판매자 확인
         String query = "SELECT 판매인ID, 이름, COUNT(거래ID) AS 판매량 " +
@@ -387,6 +407,7 @@ public class car{
         }
     }
 }
+
 
 
 
