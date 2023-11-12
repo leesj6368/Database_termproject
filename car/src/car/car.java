@@ -371,7 +371,7 @@ public class car{
 
     private static void viewTopSalespersonBySales() throws SQLException {
         // 판매량이 가장 많은 판매자 확인
-        String query = "SELECT 판매인ID, 판매인이름, COUNT(거래ID) AS 판매량 " +
+        String query = "SELECT 판매인ID, 이름, COUNT(거래ID) AS 판매량 " +
                        "FROM 거래 JOIN 판매인 USING (판매인ID) " +
                        "GROUP BY 판매인ID ORDER BY 판매량 DESC LIMIT 1";
         try (Statement statement = connection.createStatement();
