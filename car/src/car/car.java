@@ -105,9 +105,16 @@ public class car{
         System.out.print("메뉴를 선택하세요: ");
     }
 
-    private static void viewManufacturerInfo() throws SQLException {
-        // 제조사 정보 조회 로직 작성
-        // ...
+    private static void viewManufacturerInfo() throws SQLException { 
+        // 제조사 정보 조회
+        String query = "SELECT * FROM 제조사";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                System.out.println("제조사 ID: " + resultSet.getInt("제조사ID") +
+                        ", 제조사 이름: " + resultSet.getString("제조사이름"));
+            }
+        }
     }
 
     private static void viewCarModelInfo() throws SQLException {
