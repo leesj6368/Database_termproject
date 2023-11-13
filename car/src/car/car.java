@@ -28,7 +28,7 @@ public class car{
                 		break;
                     case 2:
                         // 제조사 정보 확인
-                        viewManufacturerInfo();
+                        viewManufactInfo();
                         break;
                     case 3:
                         // 자동차 모델 정보 확인
@@ -145,7 +145,7 @@ public class car{
         System.out.print("메뉴를 선택하세요: ");
     }
 
-    private static void viewManufacturerInfo() throws SQLException { 
+    private static void viewManufactInfo() throws SQLException { 
         // 제조사 정보 조회
         String query = "SELECT * FROM 제조사";
         try (Statement statement = connection.createStatement();
