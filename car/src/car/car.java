@@ -228,6 +228,7 @@ public class car{
             }
         }
     }
+    
     private static void deleteCarInfo() throws SQLException {
         // 중고차 정보 삭제
         System.out.print("삭제할 차량 ID 입력: ");
@@ -287,6 +288,7 @@ public class car{
             System.out.println("거래 내역이 성공적으로 등록되었습니다.");
         }
     }
+    
     private static void viewExpensiveCar() throws SQLException {
         // 가장 비싼 중고차 확인
         String query = "SELECT * FROM 중고차 ORDER BY 가격 DESC LIMIT 1";
@@ -394,6 +396,7 @@ public class car{
             }
         }
     }
+    
     private static void viewTopSalespersonBySales() throws SQLException {
         // 판매량이 가장 많은 판매자 확인
         String query = "SELECT 판매인ID, 이름, COUNT(거래ID) AS 판매량 " +
